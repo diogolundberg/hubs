@@ -1,5 +1,8 @@
 # hubs
 
+### Dependencies
+
+sudo pacman -S postgresql-libs
 
 ### Dataset
 
