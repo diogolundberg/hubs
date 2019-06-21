@@ -1,8 +1,6 @@
 # hubs
 
-### Dependencies
-
-sudo pacman -S postgresql-libs
+rackup config.ru
 
 ### Dataset
 
