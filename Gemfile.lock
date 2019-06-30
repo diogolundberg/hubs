@@ -92,7 +92,6 @@ PLATFORMS
 DEPENDENCIES
   database_cleaner
   dry-schema
-  dry-types
   pry-byebug
   rack-reducer
   rack-test
