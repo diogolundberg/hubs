@@ -2,15 +2,14 @@
 
 class Application
   route('hubs') do |r|
-    function = Dry.Types.Constructor(Array) { |s| Array.new(s.split('')) }
     schema = Dry::Schema.Params do
-      optional(:function).filled(function)
       optional(:name).value(:string)
       optional(:country).value(:string)
+      optional(:function).array(:string)
+      optional(:page).filled(:integer, gt?: 0)
+      optional(:size).filled(:integer, gt?: 0)
       optional(:sort).filled(included_in?: Hub.columns.map(&:to_s))
-      optional(:direction).value(:string)
-      optional(:page).value(:integer, gt?: 0)
-      optional(:size).value(:integer, gt?: 0)
+      optional(:direction).filled(included_in?: %w[asc desc])
     end
 
     r.get do

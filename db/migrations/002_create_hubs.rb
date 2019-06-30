@@ -7,7 +7,7 @@ Sequel.migration do
       String :location
       String :name
       column :function, 'text[]'
-      String :coordinates
+      column :coordinates, 'point'
     end
   end
 end

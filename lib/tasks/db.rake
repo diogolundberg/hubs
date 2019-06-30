@@ -37,7 +37,7 @@ namespace :db do
 
   desc 'Run migrations'
   task migrate: :setup do
-    Sequel.extension :migration
+    Sequel.extension(:migration)
     Sequel::Migrator.run(DB, 'db/migrations')
     Rake::Task['db:version'].execute
   end

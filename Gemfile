@@ -4,7 +4,6 @@ source 'https://rubygems.org'
 ruby '2.6.3'
 
 gem 'dry-schema'
-gem 'dry-types'
 gem 'rack-reducer'
 gem 'rack-unreloader'
 gem 'roda'
