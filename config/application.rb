@@ -2,6 +2,7 @@
 
 class Application < Roda
   plugin :multi_route
+  plugin :halt
   plugin :json, classes: [Array, Hash, Sequel::Dataset]
   plugin :default_headers,
          'Access-Control-Allow-Origin' => '*',
