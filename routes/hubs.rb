@@ -14,7 +14,8 @@ class Application
 
     r.get do
       params = schema.call(request.params)
-      params.success? ? Hub::Reducer.apply(params.to_h) : params.errors.to_h
+      r.halt(422, params.errors.to_h) unless params.success?
+      Hub::Reducer.apply(params.to_h)
     end
   end
 end
