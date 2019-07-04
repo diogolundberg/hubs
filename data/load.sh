@@ -1,3 +1,8 @@
+psql -h localhost -U postgres -d hubs_development -c "truncate table hubs_raw"
+psql -h localhost -U postgres -d hubs_development -c "truncate table hubs"
+psql -h localhost -U postgres -d hubs_development -c "truncate table countries"
+psql -h localhost -U postgres -d hubs_development -c "truncate table functions"
+
 psql -h localhost -U postgres -d hubs_development -c "\copy hubs_raw (change, country, location, name, namewodiacritics, subdivision, function, status, date, iata, coordinates, remarks) from STDIN DELIMITER ',' CSV ENCODING 'windows-1252'" < data/'2018-2 UNLOCODE CodeListPart1.csv'
 psql -h localhost -U postgres -d hubs_development -c "\copy hubs_raw (change, country, location, name, namewodiacritics, subdivision, function, status, date, iata, coordinates, remarks) from STDIN DELIMITER ',' CSV ENCODING 'windows-1252'" < data/'2018-2 UNLOCODE CodeListPart2.csv'
 psql -h localhost -U postgres -d hubs_development -c "\copy hubs_raw (change, country, location, name, namewodiacritics, subdivision, function, status, date, iata, coordinates, remarks) from STDIN DELIMITER ',' CSV ENCODING 'windows-1252'" < data/'2018-2 UNLOCODE CodeListPart3.csv'
@@ -27,3 +32,17 @@ FROM hubs_raw
 WHERE location IS NULL
 AND function IS NULL
 ORDER BY country;"
+
+
+psql -h localhost -U postgres -d hubs_development -c "
+INSERT INTO functions (id, name) VALUES
+    ('0', 'Function not known, to be specified'),
+    ('1', 'Port, as defined in Rec 16'),
+    ('2', 'Rail Terminal'),
+    ('3', 'Road Terminal'),
+    ('4', 'Airport'),
+    ('5', 'Postal Exchange Office'),
+    ('6', 'Multimodal Functions (ICDs, etc'),
+    ('7', 'Fixed Transport Functions (e.g. Oil platform'),
+    ('8', 'Inland Port'),
+    ('B', 'Border Crossing');"
