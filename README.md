@@ -2,6 +2,8 @@
 
 ```
 docker run -d -p 5432:5432 postgres:alpine
+rake db:create
+rake db:migrate
 rackup config.ru
 ```
 
