@@ -12,6 +12,7 @@ gem 'sequel_pg', require: 'sequel'
 
 group :development do
   gem 'rubocop', require: false
+  gem 'rubyzip'
 end
 
 group :development, :test do
