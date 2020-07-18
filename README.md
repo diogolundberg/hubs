@@ -18,8 +18,9 @@ The following software is required to be installed locally in order to get this 
 ```
 bundle install
 docker run -d -p 5432:5432 postgres:alpine
-rake db:create
 rake db:migrate
+rake data:fetch
+rake data:migrate
 rackup config.ru
 ```
 
