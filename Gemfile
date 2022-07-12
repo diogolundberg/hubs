@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '2.6.3'
+ruby '3.1.2'
 
 gem 'dry-schema'
+gem 'puma'
+gem 'rack'
 gem 'rack-reducer'
 gem 'rack-unreloader'
 gem 'roda'
@@ -16,12 +18,11 @@ group :development do
 end
 
 group :development, :test do
-  gem 'pry-byebug', require: 'pry'
   gem 'rake'
   gem 'rspec'
 end
 
 group :test do
-  gem 'database_cleaner'
+  gem 'database_cleaner-sequel'
   gem 'rack-test'
 end

@@ -2,7 +2,7 @@
 
 class Hub < Sequel::Model
   Reducer = Rack::Reducer.new(
-    self,
+    dataset,
     ->(name:) { where('name ilike ?', "%#{name}%") },
     ->(country:) { where(country_id: country.upcase) },
     ->(function:) { where('? && function', function.pg_array) },

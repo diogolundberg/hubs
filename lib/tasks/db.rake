@@ -6,7 +6,13 @@ namespace :db do
     config = Environment.db_config
 
     Sequel.connect(config.merge(database: 'postgres')) do |db|
-      db.execute("CREATE DATABASE #{config[:database]}")
+
+      created = db.execute <<~SQL
+        select exists(
+          SELECT datname FROM pg_catalog.pg_database WHERE datname = lower('#{config[:database]}')
+        )
+      SQL
+      db.execute("CREATE DATABASE #{config[:database]}") unless created
     end
   ensure
     DB = Sequel::DATABASES.first || Sequel.connect(config)

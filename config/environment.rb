@@ -24,7 +24,7 @@ class Environment
       host: ENV.fetch('DATABASE_HOST', 'localhost'),
       database: ENV.fetch('DATABASE_DB', "hubs_#{bundle}"),
       username: ENV.fetch('DATABASE_USERNAME', 'postgres'),
-      password: ENV['DATABASE_PASSWORD'],
+      password: ENV.fetch('DATABASE_PASSWORD', 'password'),
     }
   end
 end
