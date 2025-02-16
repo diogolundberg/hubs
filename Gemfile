@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '3.1.2'
+ruby '3.4.2'
 
 gem 'dry-schema'
 gem 'puma'
@@ -14,6 +14,7 @@ gem 'sequel_pg', require: 'sequel'
 
 group :development do
   gem 'rubocop', require: false
+  gem 'solargraph'
   gem 'rubyzip'
 end
 
