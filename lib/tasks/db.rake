@@ -1,23 +1,6 @@
 # frozen_string_literal: true
 
 namespace :db do
-  desc 'Create database'
-  task :create do
-    config = Environment.db_config
-
-    Sequel.connect(config.merge(database: 'postgres')) do |db|
-
-      created = db.execute <<~SQL
-        select exists(
-          SELECT datname FROM pg_catalog.pg_database WHERE datname = lower('#{config[:database]}')
-        )
-      SQL
-      db.execute("CREATE DATABASE #{config[:database]}") unless created
-    end
-  ensure
-    DB = Sequel::DATABASES.first || Sequel.connect(config)
-  end
-
   desc 'Drop database'
   task :drop do
     config = Environment.db_config
@@ -30,8 +13,8 @@ namespace :db do
   desc 'Print current database schema version'
   task version: :create do
     version =
-      if DB.tables.include?(:schema_info)
-        DB[:schema_info].order(:version).last[:version]
+      if database.tables.include?(:schema_info)
+        database[:schema_info].order(:version).last[:version]
       else
         'not available'
       end
@@ -40,9 +23,21 @@ namespace :db do
   end
 
   desc 'Run migrations'
-  task migrate: :create do
+  task :migrate do
     Sequel.extension(:migration)
-    Sequel::Migrator.run(DB, 'db/migrations')
+    Sequel::Migrator.run(database, 'db/migrations')
     Rake::Task['db:version'].execute
+  end
+
+  def database
+    config = Environment.db_config
+    Sequel.connect(config)
+  rescue Sequel::DatabaseConnectionError
+    Sequel.connect(config.merge(database: 'postgres')) do |db|
+      db.execute <<~SQL
+        CREATE DATABASE #{config[:database]}
+      SQL
+    end
+    Sequel.connect(config)
   end
 end
